@@ -9,23 +9,30 @@ class PlayerCard extends React.Component {
     }
     render() {
         return (
-            <div className="ui card">
+            <div className="ui raised card">
                 <div class="header">    
-                    <div class="left aligned">
+                    <span class="left floated">
                     <div class="ui huge label">
                         <i class="icon fas fa-user"></i>
                         {this.name}
                     </div>
-                        <div class="ui right floated mini statistic">
+                    </span>
+                    <span class="right floated headerStats">
+                        <div class="ui mini no-margin statistic center aligned">
                             <div class="value">
                                 {this.initiative}
                             </div>
                             Initiative
                         </div>
-                    </div>
+                    </span>
                 </div>
                 <div class="content">
 
+                </div>
+                <div class="ui bottom attached">
+                    <button class="ui icon button right floated">
+                        <i class="delete icon"></i>
+                    </button>
                 </div>
             </div>
         );

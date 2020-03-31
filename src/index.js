@@ -12,7 +12,7 @@ const App = () => {
             <PlayerCard name="Nik" initiative="12"/>
             <PlayerCard name="Nik"/>
             <PlayerCard name="Nik"/>
-            <MonsterCard name="Monster"/>
+            <MonsterCard name="Monster" health="19" armourClass="12" initiative="10"/>
         </div>
     );
 };
