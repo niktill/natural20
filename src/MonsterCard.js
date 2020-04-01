@@ -10,29 +10,33 @@ class MonsterCard extends PlayerCard {
     render() {
         return (
             <div className="ui card monsterCard">
-                <div class="header">    
-                    <span class="left floated">
-                    <div class="ui huge label">
-                        <i class="icon fas fa-user"></i>
-                        {this.name}
+                <div class="header">
+                    <div class="column">
+                        <div class="ui large label">
+                            <i class="icon fas fa-user"></i>
+                            {this.name}
+                        </div>
                     </div>
-                    </span>
-                    <span class="right floated headerStats">
-                        <div class="ui mini no-margin statistic center aligned">
-                            <div class="value">
-                                {this.armourClass}
-                            </div>
-                            AC
-                        </div>
-                        <div class="ui mini no-margin statistic center aligned">
-                            <div class="value">
-                                {this.initiative}
-                            </div>
-                            Initiative
-                        </div>
-                    </span>
                 </div>
-                <div class="content">      
+                <div class="content">
+                    <div class="ui two column doubling stackable grid container">
+                        <div class="column">
+                            <div class="ui mini no-margin statistic center aligned">
+                                <div class="value">
+                                    {this.initiative}
+                                </div>
+                                Initiative
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui mini no-margin statistic center aligned">
+                                <div class="value">
+                                    {this.armourClass}
+                                </div>
+                                AC
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="ui bottom attached">
                     <button class="ui icon button right floated">
