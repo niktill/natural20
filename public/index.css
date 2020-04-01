@@ -3,3 +3,7 @@
     border: 1px solid black;
     margin: 10px;
 }
+
+.monsterCard div.ui.active.indicating.progress .bar::after {
+    display: none;
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon, Statistic } from 'semantic-ui-react'
 
 class PlayerCard extends React.Component {
     constructor(props) {
@@ -9,24 +10,23 @@ class PlayerCard extends React.Component {
     }
     render() {
         return (
-            <div className="ui raised card">
-                <div class="header">
-                    <div class="ui large label">
-                        <i class="icon fas fa-user"></i>
+            <div className='ui raised card'>
+                <div className='header'>
+                    <div className='ui large label fluid'>
+                        <i className='icon fas fa-user'></i>
                         {this.name}
                     </div>
                 </div>
-                <div class="content">
-                    <div class="ui mini no-margin statistic center aligned">
-                        <div class="value">
-                            {this.initiative}
-                        </div>
-                        Initiative
-                    </div>
+                <div className='content center aligned'>
+                    <Statistic size='mini'>
+                        <Statistic.Value>
+                            <Icon name='sort amount up' />{this.initiative}
+                        </Statistic.Value>
+                    </Statistic>
                 </div>
-                <div class="ui bottom attached">
-                    <button class="ui icon button right floated">
-                        <i class="delete icon"></i>
+                <div className='ui bottom attached'>
+                    <button className='ui icon button right floated'>
+                        <i className='delete icon'></i>
                     </button>
                 </div>
             </div>
