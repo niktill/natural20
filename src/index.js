@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PlayerCard from './PlayerCard';
-import MonsterCard from './MonsterCard';
+import MonsterCard from './CardContent';
 import BattleTracker from './BattleTracker';
+import BattleCard from './BattleCard';
+
 
 class App extends React.Component {
     
