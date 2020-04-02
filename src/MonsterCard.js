@@ -1,32 +1,46 @@
 import React from 'react';
 import PlayerCard from './PlayerCard'
-import { Grid, Icon, Statistic, Progress, Form, Button } from 'semantic-ui-react'
+import { Grid, Icon, Statistic, Progress, Form, Button, Card, Label } from 'semantic-ui-react'
 
 
 class MonsterCard extends PlayerCard {
     constructor(props) {
         super(props);
         this.hitPoints = props.hitPoints;
-        this.armourClass = props.armourClass
+        this.armourClass = props.armourClass;
+        this.updateHitPoints = this.updateHitPoints.bind(this);
 
-        this.state = { currentHitPoints: props.hitPoints }
+        this.state = { currentHitPoints: props.hitPoints };
     }
-    updateHitPoints(event) {
-        console.log(this);
 
+    updateHitPoints = (event) => {
+        event.preventDefault();
+
+        let dmg = event.target.damage.value;
+        this.setState({ dmgVal: dmg });
+
+        let newHitPoints = this.state.currentHitPoints - dmg;
+        if (newHitPoints > 0) {
+            if (newHitPoints > this.hitPoints) {
+                this.setState({ currentHitPoints: this.hitPoints });
+            } else {
+                this.setState({ currentHitPoints: newHitPoints })
+            }
+        } else {
+            this.setState({ currentHitPoints: 0 });
+        }
     }
+
     render() {
         return (
-            <div className='ui card monsterCard'>
-                <div className='header'>
-                    <div className='column'>
-                        <div className='ui large label fluid'>
-                            <i className='icon fas fa-user'></i>
-                            {this.name}
-                        </div>
-                    </div>
-                </div>
-                <div className='content center aligned'>
+            <Card className="monsterCard">
+                <Card.Header>
+                    <Label size='large' className='fluid' icon='user'>
+                        <Icon name='user' />
+                        {this.name}
+                    </Label>
+                </Card.Header>
+                <Card.Content className='content center aligned'>
                     <div className='ui two column doubling stackable grid container'>
                         <div className='column center aligned'>
                             <Statistic size='mini'>
@@ -50,24 +64,27 @@ class MonsterCard extends PlayerCard {
                         total={this.hitPoints}
                         progress='ratio'
                         label='Hit Points'
-                        active={false} />
+                        active={false}
+                        disabled={this.state.currentHitPoints == 0 ? true : false} />
                     <div className='ui hidden divider'></div>
                     <Grid centered>
-                        <Form unstackable>
+                        <Form unstackable onSubmit={this.updateHitPoints}>
                             <Form.Group className="center aligned">
-                                <Form.Input style={{ width: '100px' }} placeholder='Damage' />
+                                <Form.Input
+                                    type="number"
+                                    style={{ width: '100px' }}
+                                    name="damage"
+                                    placeholder='Damage'
+                                    required={true} />
                                 <Button icon type='submit'><Icon name='checkmark' /></Button>
                             </Form.Group>
                         </Form>
                     </Grid>
-
-                </div>
+                </Card.Content>
                 <div className='ui bottom attached'>
-                    <button className='ui icon button right floated'>
-                        <i className='delete icon'></i>
-                    </button>
+                    <Button icon floated='right' type='submit' onClick={this.deleteSelf}><Icon name='delete' /></Button>
                 </div>
-            </div>
+            </Card>
         );
     }
 }

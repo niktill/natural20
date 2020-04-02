@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Statistic } from 'semantic-ui-react'
+import { Icon, Statistic, Card, Button, Label } from 'semantic-ui-react'
 
 class PlayerCard extends React.Component {
     constructor(props) {
@@ -10,26 +10,26 @@ class PlayerCard extends React.Component {
     }
     render() {
         return (
-            <div className='ui raised card'>
-                <div className='header'>
-                    <div className='ui large label fluid'>
-                        <i className='icon fas fa-user'></i>
+            <Card className="playerCard">
+                <Card.Header>
+                    <Label size='large' className='fluid' icon='user'>
+                        <Icon name='user' />
                         {this.name}
+                    </Label>
+                </Card.Header>
+                <Card.Content className='content center aligned'>
+                    <div className='column center aligned'>
+                        <Statistic size='mini'>
+                            <Statistic.Value>
+                                <Icon name='sort amount up' />{this.initiative}
+                            </Statistic.Value>
+                        </Statistic>
                     </div>
-                </div>
-                <div className='content center aligned'>
-                    <Statistic size='mini'>
-                        <Statistic.Value>
-                            <Icon name='sort amount up' />{this.initiative}
-                        </Statistic.Value>
-                    </Statistic>
-                </div>
+                </Card.Content>
                 <div className='ui bottom attached'>
-                    <button className='ui icon button right floated'>
-                        <i className='delete icon'></i>
-                    </button>
+                    <Button icon floated='right' type='submit' onClick={this.deleteSelf}><Icon name='delete' /></Button>
                 </div>
-            </div>
+            </Card>
         );
     }
 }
