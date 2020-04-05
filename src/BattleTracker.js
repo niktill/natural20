@@ -1,39 +1,48 @@
 import React from 'react';
 import { Card } from 'semantic-ui-react'
 import BattleCard from './BattleCard';
+import uniqueId from 'react-html-id';
 
-
-class BattleCardList extends React.Component {
+class BattleTracker extends React.Component {
     constructor(props) {
         super(props);
+        uniqueId.enableUniqueIds(this)
 
-        this.state = { 
-            cards: [<BattleCard name='Nik' initiative='12' deleteSelf={this.deleteCard} cardType="player" initiative='22' />,
-            <BattleCard name='Nik'deleteSelf={this.deleteCard} cardType="player" initiative='18'/>,
-            <BattleCard name='Nik'deleteSelf={this.deleteCard}  cardType="player" initiative='10'/>,
-            <BattleCard name='Veteran Goblin Raider'
-                health='19'
-                armourClass='12'
-                initiative='10'
-                hitPoints='32'
-                deleteSelf={this.deleteCard} 
-                cardType="monster"/>,
-            <BattleCard name='Veteran Goblin Raider'
-                health='19'
-                initiative='3'
-                armourClass='11'
-                hitPoints='32'
-                deleteCard={this.deleteCard}
-                cardType='monster' />], 
-            cardCurrentTurn: undefined };
+        this.state = {
+            cards: [
+                { id: this.nextUniqueId(), name: 'Nik', cardType: 'player', initiative: 12 },
+                { id: this.nextUniqueId(), name: 'Dan', cardType: 'player', initiative: 3 },
+                { id: this.nextUniqueId(), name: 'Griffin', cardType: 'player', initiative: 7 },
+                { id: this.nextUniqueId(), name: 'Maud', cardType: 'player', initiative: 18 }
+            ],
+        };
     }
+
+    deleteCard = (index, e) => {
+        e.preventDefault();
+        
+        let cardList = Object.assign([], this.state.cards);
+        cardList.splice(index, 1);
+        this.setState({ cards: cardList });
+    }
+    
+
     render() {
         return (
             <Card.Group>
-                {this.state.cards}
+                {this.state.cards
+                .sort((a,b)=> b.initiative - a.initiative)
+                .map((card, i) => (
+                    <BattleCard
+                        key={card.id}
+                        name={card.name}
+                        deleteSelf={this.deleteCard.bind(this, i)}
+                        cardType={card.cardType}
+                        initiative={card.initiative} />
+                ))}
             </Card.Group>
         );
     }
 }
 
-export default BattleCardList;
+export default BattleTracker;

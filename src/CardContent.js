@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Icon, Statistic, Progress, Form, Button, Card, Label } from 'semantic-ui-react'
+import { Grid, Icon, Statistic, Progress, Form, Button, Card } from 'semantic-ui-react'
 
 export class PlayerCardContent extends React.Component {
     constructor(props) {
@@ -79,7 +79,7 @@ export class MonsterCardContent extends React.Component {
                     progress='ratio'
                     label='Hit Points'
                     active={false}
-                    disabled={this.state.currentHitPoints == 0 ? true : false} />
+                    disabled={this.state.currentHitPoints === 0 ? true : false} />
                 <div className='ui hidden divider'></div>
                 <Grid centered>
                     <Form unstackable onSubmit={this.updateHitPoints}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {PlayerCardContent, MonsterCardContent} from './CardContent';
+import { PlayerCardContent, MonsterCardContent } from './CardContent';
 import { Icon, Button, Card, Label } from 'semantic-ui-react'
 
 
@@ -12,19 +12,18 @@ class BattleCard extends React.Component {
         this.armourClass = props.armourClass;
         this.hitPoints = props.hitPoints;
     }
-    deleteCard = () => {        
-    }
+
     renderCardContent() {
-        if (this.cardType == 'player') {
+        if (this.cardType === 'player') {
             return (
                 <PlayerCardContent initiative={this.initiative}></PlayerCardContent>
             );
-        } else if (this.cardType == 'monster') {
+        } else if (this.cardType === 'monster') {
             return (
-                <MonsterCardContent 
-                initiative={this.initiative}
-                armourClass={this.armourClass}
-                hitPoints={this.hitPoints}>
+                <MonsterCardContent
+                    initiative={this.initiative}
+                    armourClass={this.armourClass}
+                    hitPoints={this.hitPoints}>
                 </MonsterCardContent>
             );
         } else {
@@ -33,6 +32,7 @@ class BattleCard extends React.Component {
             );
         }
     }
+
     render() {
         return (
             <Card className="monsterCard">
@@ -44,7 +44,7 @@ class BattleCard extends React.Component {
                 </Card.Header>
                 {this.renderCardContent()}
                 <div className='ui bottom attached'>
-                    <Button icon floated='right' onClick={this.deleteCard.bvin}><Icon name='delete' /></Button>
+                    <Button icon floated='right' onClick={this.props.deleteSelf}><Icon name='delete' /></Button>
                 </div>
             </Card>
         );
