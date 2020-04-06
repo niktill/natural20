@@ -1,9 +1,38 @@
-.playerList .playerCard {
-    display: inline-block;
-    border: 1px solid black;
-    margin: 10px;
-}
-
 .monsterCard div.ui.active.indicating.progress .bar::after {
     display: none;
+}
+
+#natural-20-app {
+    margin: 20px;
+}
+
+#add-card-form {
+    margin: 2rem auto;
+}
+
+.ui.header>.image+.content, .ui.header>img+.content {
+    padding-right: .75rem
+}
+
+@media only screen and (max-width: 768px) {
+    #add-card-form .field {
+        margin: 10px 0;
+    }
+
+    #battle-cards {
+        justify-content: center;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    #add-card-button {
+        position: relative;
+        top: 1.6rem;
+    }
+}
+
+@media only screen and (max-width: 436px) {
+    #sword-right {
+        display: none;
+    }
 }
