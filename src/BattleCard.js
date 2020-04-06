@@ -1,6 +1,6 @@
 import React from 'react';
 import { PlayerCardContent, MonsterCardContent } from './CardContent';
-import { Icon, Button, Card, Label } from 'semantic-ui-react'
+import { Icon, Button, Card, Label, Message, Popup } from 'semantic-ui-react'
 
 
 class BattleCard extends React.Component {
@@ -28,7 +28,12 @@ class BattleCard extends React.Component {
             );
         } else {
             return (
-                <p>Invalid Card Type</p>
+                <Card.Content>
+                    <Message negative>
+                        <Message.Header>Invalid Card Type</Message.Header>
+                        <p>Please delete this card and add agian</p>
+                    </Message>
+                </Card.Content>
             );
         }
     }
@@ -38,13 +43,21 @@ class BattleCard extends React.Component {
             <Card className="monsterCard">
                 <Card.Header>
                     <Label size='large' className='fluid'>
-                        <Icon name='user' />
+                        <Icon size='large' name={this.cardType === 'player' ? 'user' : 'bug'} />
                         {this.name}
                     </Label>
                 </Card.Header>
                 {this.renderCardContent()}
                 <div className='ui bottom attached'>
-                    <Button icon floated='right' onClick={this.props.deleteSelf}><Icon name='delete' /></Button>
+                    <Popup floated='right'
+                        trigger={
+                            <Button floated='right' icon='delete' />
+                        }
+                        content={<Button color='red' content='Delete Card' />}
+                        on='click'
+                        position='top right'
+                        onClick={this.props.deleteSelf}
+                    />
                 </div>
             </Card>
         );
