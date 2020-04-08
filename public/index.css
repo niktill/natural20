@@ -19,6 +19,14 @@
     padding-right: .75rem
 }
 
+.monster-icon {
+    width: auto;
+    margin: 0 .75em 0 0;
+    line-height: 1;
+    vertical-align: middle;
+    font-size: 1.5em;
+}
+
 #delete-all-button {
     margin-top: 4rem;
     margin-bottom: 5rem;

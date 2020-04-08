@@ -43,7 +43,7 @@ class BattleCard extends React.Component {
             <Card className="monsterCard">
                 <Card.Header>
                     <Label size='large' className='fluid'>
-                        <Icon size='large' name={this.cardType === 'player' ? 'user' : 'bug'} />
+                        {this.cardType === 'player' ? <Icon size='large' name='user'/>: <i className='monster-icon fas fa-skull'></i>}
                         {this.name}
                     </Label>
                 </Card.Header>
