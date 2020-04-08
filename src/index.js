@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Card, Form } from 'semantic-ui-react'
+import { Card, Form, Popup, Checkbox } from 'semantic-ui-react'
 import BattleCard from './BattleCard';
 import shortid from "shortid";
 
@@ -10,7 +10,15 @@ class App extends React.Component {
 
         this.state = {
             cards: [],
-            addCardOptions: { cardType: undefined, name: undefined, initiative: undefined, armourClass: undefined }
+            addCardOptions: {
+                cardType: undefined,
+                name: undefined,
+                initiative: undefined,
+                rollinitiative: false,
+                initiativeModifier: 0,
+                armourClass: undefined,
+                quantity: 1
+            }
         };
     }
 
@@ -22,55 +30,87 @@ class App extends React.Component {
         this.setState({ cards: cardList });
     }
 
-    changeAddCardType = (event, data) => {
-        event.preventDefault();
+    changeAddCardOptions = (e, data) => {
+        e.preventDefault();
 
-        let addCardOptionsCopy = this.state.addCardOptions
-        addCardOptionsCopy.cardType = data.value;
-        this.setState({ addCardOptions: addCardOptionsCopy })
+        let cardOption = data.name;
+        let newVal = (data.name === 'rollinitiative') ? data.checked : data.value;
+        let addCardOptionsCopy = this.state.addCardOptions;
+        addCardOptionsCopy[cardOption] = newVal;
+        this.setState({ addCardOptions: addCardOptionsCopy });
+
     }
 
-    addCard = (event, data) => {
-        let newCard = {
-            id: shortid.generate(),
-            cardType: this.state.addCardOptions.cardType,
-            name: event.target.name.value,
-            initiative: event.target.initiative.value,
-            armourClass: event.target.armourClass.value,
-            hitPoints: event.target.hitPoints.value
+    addCards = (event, data) => {
+        let numCards = this.state.addCardOptions.quantity;
+
+        for (let i = 0; i < numCards; i++) {
+            let initiativeVal = this.state.addCardOptions.rollinitiative ?
+                Math.floor(Math.random() * 20) + 1 + parseInt(event.target.initiativeModifier.value) : this.state.addCardOptions.initiative;
+                
+            let newCard = {
+                id: shortid.generate(),
+                cardType: this.state.addCardOptions.cardType,
+                name: (numCards === 1) ? event.target.name.value : event.target.name.value + " #" + (i + 1),
+                initiative: initiativeVal,
+                armourClass: event.target.armourClass.value,
+                hitPoints: event.target.hitPoints.value
+            }
+
+            let newCardList = this.state.cards;
+            newCardList.push(newCard);
+            this.setState({ cards: newCardList });
         }
-
-        let newCardList = this.state.cards;
-        newCardList.push(newCard);
-        this.setState({ cards: newCardList });
-
     }
-
 
     render() {
         return (
             <div id="natural-20-app">
-                <Form id='add-card-form' onSubmit={this.addCard}>
+                {/* Add battle card(s) form */}
+                <Form id='add-card-form' onSubmit={this.addCards}>
                     <Form.Group>
-                        <Form.Select
-                            onChange={this.changeAddCardType}
-                            value={this.state.addCardOptions.cardType}
-                            required={true}
-                            label='Type'
-                            placeholder='Type'
+                        <Form.Select value={this.state.addCardOptions.cardType} name='cardType' required={true} label='Type' placeholder='Type'
+                            onChange={this.changeAddCardOptions}
                             options={[{ key: 'p', text: 'Player', value: 'player' }, { key: 'm', text: 'Monster', value: 'monster' }]}
                         />
-                        <Form.Input required={true} width={5} label='Name' placeholder='Name' name='name' />
+                        <Form.Input required={true} label='Name' placeholder='Name' name='name' />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Input required={true} width={2} label='Initiative' placeholder='Initiative' type='number' name='initiative' />
+                        <Form.Input label='Initiative' placeholder='Initiative' type='number' name='initiative'
+                            disabled={this.state.addCardOptions.rollinitiative}
+                            required={!this.state.addCardOptions.rollinitiative} />
+                        <Popup
+                            trigger={
+                                <Checkbox width={2} label='Roll Initiative' name='rollinitiative'
+                                    checked={this.state.addCardOptions.rollinitiative}
+                                    onChange={this.changeAddCardOptions} />}
+                            content='Roll initiative instead of setting'
+                            size='small'>
+                        </Popup>
+                        <Form.Input label='Initiative Modifier' placeholder='Initiative Modifier' type='number' name='initiativeModifier'
+                            disabled={!this.state.addCardOptions.rollinitiative} />
+                    </Form.Group>
+                    <Form.Group>
                         <Form.Input disabled={this.state.addCardOptions.cardType !== 'monster'}
-                            width={2} label='Armour Class' placeholder='Armour Class' type='number' name='armourClass' />
+                            label='Armour Class' placeholder='Armour Class' type='number' name='armourClass' />
                         <Form.Input disabled={this.state.addCardOptions.cardType !== 'monster'}
-                            width={2} label='Hit Points' placeholder='Hit Points' type='number' name='hitPoints' />
+                            label='Hit Points' placeholder='Hit Points' type='number' name='hitPoints' />
+                    </Form.Group>
+                    <Form.Group inline={true}>
+                        <Popup
+                            trigger={
+                                <Form.Input
+                                    disabled={this.state.addCardOptions.cardType !== 'monster'}
+                                    onChange={this.changeAddCardOptions}
+                                    value={this.state.addCardOptions.quantity}
+                                    min='1'
+                                    style={{ 'width': '100px' }} label='Quantity' type='number' name='quantity' />}
+                            content='Quantity of monsters to add'
+                            size='small' />
                         <Form.Button type='submit' id='add-card-button' positive={true}> Add to Battle</Form.Button>
                     </Form.Group>
                 </Form>
+                {/* List of Battle Cards */}
                 <Card.Group id='battle-cards'>
                     {this.state.cards
                         .sort((a, b) => b.initiative - a.initiative)

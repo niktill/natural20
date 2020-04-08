@@ -10,6 +10,15 @@
     margin: 2rem auto;
 }
 
+#add-card-form .ui.checkbox {
+    display: inline-flex;
+    align-self: center;
+    position: relative;
+    top: 0.7rem;
+    margin-left: 1rem;
+    margin-right: 1rem; 
+}
+
 .ui.header>.image+.content, .ui.header>img+.content {
     padding-right: .75rem
 }
@@ -21,13 +30,6 @@
 
     #battle-cards {
         justify-content: center;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    #add-card-button {
-        position: relative;
-        top: 1.6rem;
     }
 }
 
