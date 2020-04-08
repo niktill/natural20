@@ -42,12 +42,15 @@ class App extends React.Component {
     }
 
     addCards = (event, data) => {
-        let numCards = this.state.addCardOptions.quantity;
+        let numCards = this.state.addCardOptions.cardType === 'monster' ? this.state.addCardOptions.quantity : 1;
 
         for (let i = 0; i < numCards; i++) {
+            // calulate initiative         
+            let initiativeModifierVal = event.target.initiativeModifier.value !== '' ?
+                parseInt(event.target.initiativeModifier.value) : 0;
             let initiativeVal = this.state.addCardOptions.rollinitiative ?
-                Math.floor(Math.random() * 20) + 1 + parseInt(event.target.initiativeModifier.value) : this.state.addCardOptions.initiative;
-                
+                Math.floor(Math.random() * 20) + 1 + initiativeModifierVal : event.target.initiativeModifier.value;
+            // create new card
             let newCard = {
                 id: shortid.generate(),
                 cardType: this.state.addCardOptions.cardType,
@@ -56,7 +59,7 @@ class App extends React.Component {
                 armourClass: event.target.armourClass.value,
                 hitPoints: event.target.hitPoints.value
             }
-
+            // add new card to card list
             let newCardList = this.state.cards;
             newCardList.push(newCard);
             this.setState({ cards: newCardList });
