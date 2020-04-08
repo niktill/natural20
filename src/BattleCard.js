@@ -53,7 +53,7 @@ class BattleCard extends React.Component {
                         trigger={
                             <Button floated='right' icon='delete' />
                         }
-                        content={<Button color='red' content='Delete Card' />}
+                        content={<Button color='red' content='Delete' />}
                         on='click'
                         position='top right'
                         onClick={this.props.deleteSelf}
