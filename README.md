@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Natural 20
+
+A Battle Tracker used for Dungeons and Dragons or other table-top RPGs. Built with React!
+
 ## Available Scripts
 
 In the project directory, you can run:
