@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Card, Form, Popup, Checkbox } from 'semantic-ui-react'
+import { Card, Form, Button, Popup, Checkbox, Modal, Container } from 'semantic-ui-react'
 import BattleCard from './BattleCard';
 import shortid from "shortid";
 
@@ -18,16 +18,9 @@ class App extends React.Component {
                 initiativeModifier: 0,
                 armourClass: undefined,
                 quantity: 1
-            }
+            },
+            showDeleteAllModal: false
         };
-    }
-
-    deleteCard = (index, e) => {
-        e.preventDefault();
-
-        let cardList = Object.assign([], this.state.cards);
-        cardList.splice(index, 1);
-        this.setState({ cards: cardList });
     }
 
     changeAddCardOptions = (e, data) => {
@@ -49,7 +42,7 @@ class App extends React.Component {
             let initiativeModifierVal = event.target.initiativeModifier.value !== '' ?
                 parseInt(event.target.initiativeModifier.value) : 0;
             let initiativeVal = this.state.addCardOptions.rollinitiative ?
-                Math.floor(Math.random() * 20) + 1 + initiativeModifierVal : event.target.initiativeModifier.value;
+                Math.floor(Math.random() * 20) + 1 + initiativeModifierVal : event.target.initiative.value;
             // create new card
             let newCard = {
                 id: shortid.generate(),
@@ -65,10 +58,21 @@ class App extends React.Component {
             this.setState({ cards: newCardList });
         }
     }
+    deleteCard = (index, e) => {
+        e.preventDefault();
+
+        let cardList = Object.assign([], this.state.cards);
+        cardList.splice(index, 1);
+        this.setState({ cards: cardList });
+    }
+
+    deleteAll = () => {
+        this.setState({ cards: [], showDeleteAllModal: false })
+    }
 
     render() {
         return (
-            <div id="natural-20-app">
+            <Container>
                 {/* Add battle card(s) form */}
                 <Form id='add-card-form' onSubmit={this.addCards}>
                     <Form.Group>
@@ -128,7 +132,28 @@ class App extends React.Component {
                                 armourClass={card.armourClass} />
                         ))}
                 </Card.Group>
-            </div>
+                {/* Delete all battle bards button and modal */}
+                <Container textAlign='center'>
+                    {this.state.cards.length > 0 ?
+                        <Button id='delete-all-button' negative onClick={() => { this.setState({ showDeleteAllModal: true }) }}>Delete All</Button> : null}
+                </Container>
+                <Modal size='tiny' open={this.state.showDeleteAllModal}
+                    onClose={() => { this.setState({ showDeleteAllModal: false }) }}>
+                    <Modal.Header align='center'>Delete All</Modal.Header>
+                    <Modal.Content align='center'>
+                        <p>Are you sure you want to delete all?</p>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button negative onClick={() => { this.setState({ showDeleteAllModal: false }) }}>No</Button>
+                        <Button onClick={this.deleteAll}
+                            positive
+                            icon='checkmark'
+                            labelPosition='right'
+                            content='Yes'
+                        />
+                    </Modal.Actions>
+                </Modal>
+            </Container>
         );
     }
 }

@@ -2,10 +2,6 @@
     display: none;
 }
 
-#natural-20-app {
-    margin: 20px;
-}
-
 #add-card-form {
     margin: 2rem auto;
 }
@@ -21,6 +17,11 @@
 
 .ui.header>.image+.content, .ui.header>img+.content {
     padding-right: .75rem
+}
+
+#delete-all-button {
+    margin-top: 4rem;
+    margin-bottom: 5rem;
 }
 
 @media only screen and (max-width: 768px) {
