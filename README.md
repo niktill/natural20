@@ -22,5 +22,5 @@ You will also see any lint errors in the console.
 - App built with https://reactjs.org/
 - Design and styling from https://semantic-ui.com/ 
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
-- Deployed with https://www.heroku.com/
+- Deployed with https://www.heroku.com/ & https://github.com/mars/create-react-app-buildpack/blob/master/README.md#user-content-architecture-
 
