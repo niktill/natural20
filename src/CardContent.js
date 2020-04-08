@@ -77,7 +77,7 @@ export class MonsterCardContent extends React.Component {
                     value={this.state.currentHitPoints}
                     total={this.hitPoints}
                     progress='ratio'
-                    label='Hit Points'
+                    label={<div className='label'><Icon name='heart outline'></Icon>Hit Points</div>}
                     active={false}
                     disabled={this.state.currentHitPoints === 0 ? true : false} />
                 <div className='ui hidden divider'></div>
