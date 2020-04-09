@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom';
 import { Card, Button, Modal, Container } from 'semantic-ui-react'
 import BattleCard from './BattleCard';
 import AddCardForm from './AddCardForm'
+import shortid from "shortid";
+
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            cards: [],
+            cards: [{id: shortid.generate(), cardType:'player',initiative:12,name:'Nik'}],
             showDeleteAllModal: false
         };
     }
@@ -38,8 +40,7 @@ class App extends React.Component {
                 {/* Add battle card(s) form */}
                 <AddCardForm
                     cards={this.cards}
-                    addCardsToTracker={this.addCardsToTracker}
-                ></AddCardForm>
+                    addCardsToTracker={this.addCardsToTracker} />
                 {/* List of Battle Cards */}
                 <Card.Group id='battle-cards'>
                     {this.state.cards

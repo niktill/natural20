@@ -47,7 +47,7 @@ export class AddCardForm extends React.Component {
                 name: (numCards === 1) ? event.target.name.value : event.target.name.value + " #" + (i + 1),
                 initiative: initiativeVal,
                 armourClass: event.target.armourClass.value,
-                hitPoints: event.target.hitPoints.value
+                hitPoints: event.target.hitPoints.value,
             }
             // add new card to cardsToAdd list
             cardsToAdd.push(newCard);

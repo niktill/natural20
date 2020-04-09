@@ -1,11 +1,12 @@
 import React from 'react';
-import { Grid, Icon, Statistic, Progress, Form, Button, Card } from 'semantic-ui-react'
+import { Grid, Icon, Statistic, Progress, Form, Button, Card, List, Popup } from 'semantic-ui-react'
 
 export class PlayerCardContent extends React.Component {
     constructor(props) {
         super(props);
         this.name = props.name;
         this.initiative = props.initiative;
+        this.conditions = props.conditions;
     }
     render() {
         return (
@@ -17,6 +18,8 @@ export class PlayerCardContent extends React.Component {
                         </Statistic.Value>
                     </Statistic>
                 </div>
+                <div className='ui hidden divider'></div>
+                {this.conditions.length > 0 ? <Conditions conditions={this.conditions} /> : null}
             </Card.Content>
         );
     }
@@ -97,4 +100,44 @@ export class MonsterCardContent extends React.Component {
             </Card.Content>
         );
     }
+}
+
+const conditionIcons = {
+    blinded: 'eye slash',
+    charmed: 'magic',
+    deafened: 'deaf',
+    frightened: 'exclamation',
+    paralyzed: 'meh',
+    poisoned: 'syringe',
+    prone: 'long arrow alternate down',
+    stunned: 'question',
+    unconscious: 'bed'
+}
+
+class Conditions extends React.Component {
+    constructor(props) {
+        super(props);
+        this.conditions = props.conditions;
+
+    }
+
+    render() {
+        return (
+            <div>
+                <p>Conditons</p>
+                <List horizontal={true}>
+                    {this.conditions.map((condition) => (
+                        <List.Item key={condition}>
+                            <Popup position='top center'
+                                trigger={<Icon size='large' name={conditionIcons[condition]} />}
+                                content={condition.charAt(0).toUpperCase() + condition.slice(1)}
+                                size='mini'>
+                            </Popup>
+                        </List.Item>
+                    ))}
+                </List>
+            </div>
+        );
+    }
+
 }
