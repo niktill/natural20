@@ -4,7 +4,7 @@ Natural 20 is a Battle Tracker to be used for Dungeons & Dragons or other table-
 
 ## How to start Natural 20
 
-Natural 20 URL:https://natural20-battle-tracker.herokuapp.com/ 
+Natural 20 URL:https://natural20-battle-tracker.herokuapp.com/ (please allow a couple of seconds for it to load)
 
 ---OR---
 
