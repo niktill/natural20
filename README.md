@@ -4,7 +4,7 @@ Natural 20 is a Battle Tracker to be used for Dungeons & Dragons or other table-
 
 ## How to start Natural 20
 
-Natural 20 URL:https://natural20-battle-tracker.herokuapp.com/ 
+Natural 20 URL:https://natural20-battle-tracker.herokuapp.com/ (please allow some time for it to load on start up)
 
 ---OR---
 
@@ -20,7 +20,7 @@ You will also see any lint errors in the console.
 
 ## Credits
 - App built with https://reactjs.org/
-- Design and styling from https://semantic-ui.com/ 
+- Design and styling from https://semantic-ui.com/ and icons from https://fontawesome.com/
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 - Deployed with https://www.heroku.com/ & https://github.com/mars/create-react-app-buildpack/blob/master/README.md#user-content-architecture-
 
