@@ -6,7 +6,6 @@ export class PlayerCardContent extends React.Component {
         super(props);
         this.name = props.name;
         this.initiative = props.initiative;
-        this.conditions = props.conditions;
     }
     render() {
         return (
@@ -19,7 +18,7 @@ export class PlayerCardContent extends React.Component {
                     </Statistic>
                 </div>
                 <div className='ui hidden divider'></div>
-                {this.conditions.length > 0 ? <Conditions conditions={this.conditions} /> : null}
+                {this.props.conditions.length > 0 ? <Conditions conditions={this.props.conditions} /> : null}
             </Card.Content>
         );
     }
@@ -97,6 +96,8 @@ export class MonsterCardContent extends React.Component {
                         </Form.Group>
                     </Form>
                 </Grid>
+                <div className='ui hidden divider'></div>
+                {this.props.conditions.length > 0 ? <Conditions conditions={this.props.conditions} /> : null}
             </Card.Content>
         );
     }
@@ -115,18 +116,12 @@ const conditionIcons = {
 }
 
 class Conditions extends React.Component {
-    constructor(props) {
-        super(props);
-        this.conditions = props.conditions;
-
-    }
-
     render() {
         return (
             <div>
                 <p>Conditons</p>
                 <List horizontal={true}>
-                    {this.conditions.map((condition) => (
+                    {this.props.conditions.map((condition) => (
                         <List.Item key={condition}>
                             <Popup position='top center'
                                 trigger={<Icon size='large' name={conditionIcons[condition]} />}

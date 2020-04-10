@@ -1,6 +1,6 @@
 import React from 'react';
 import { PlayerCardContent, MonsterCardContent } from './CardContent';
-import { Icon, Button, Card, Label, Message, Popup, List } from 'semantic-ui-react'
+import { Icon, Button, Card, Label, Message, Popup } from 'semantic-ui-react'
 
 
 class BattleCard extends React.Component {
@@ -11,7 +11,14 @@ class BattleCard extends React.Component {
         this.cardType = props.cardType;
         this.armourClass = props.armourClass;
         this.hitPoints = props.hitPoints;
-        this.conditions = ['deafened', 'blinded'];
+
+        this.state = {
+            conditions: []
+        }
+    }
+
+    setConditions = (newConditions) => {
+        this.setState({conditions: newConditions});          
     }
 
     renderCardContent() {
@@ -19,7 +26,7 @@ class BattleCard extends React.Component {
             return (
                 <PlayerCardContent
                     initiative={this.initiative}
-                    conditions={this.conditions}>
+                    conditions={this.state.conditions}>
                 </PlayerCardContent>
             );
         } else if (this.cardType === 'monster') {
@@ -28,7 +35,7 @@ class BattleCard extends React.Component {
                     initiative={this.initiative}
                     armourClass={this.armourClass}
                     hitPoints={this.hitPoints}
-                    conditions={this.conditions}>
+                    conditions={this.state.conditions}>
                 </MonsterCardContent>
             );
         } else {
@@ -54,7 +61,7 @@ class BattleCard extends React.Component {
                 </Card.Header>
                 {this.renderCardContent()}
                 <div className='ui bottom attached'>
-                    <ConditionsButton floated='left' conditions={this.conditions}/>
+                    <ConditionsButton floated='left' conditions={this.state.conditions} setConditions={this.setConditions} />
                     <Popup
                         trigger={
                             <Button floated='right' icon='delete' />
@@ -69,11 +76,32 @@ class BattleCard extends React.Component {
     }
 }
 
+const conditions = [
+    { name: 'Blinded', icon: 'eye slash' },
+    { name: 'Charmed', icon: 'magic' },
+    { name: 'Deafened', icon: 'deaf' },
+    { name: 'Frightened', icon: 'exclamation' },
+    { name: 'Paralyzed', icon: 'meh' },
+    { name: 'Poisoned', icon: 'syringe' },
+    { name: 'Prone', icon: 'long arrow alternate down' },
+    { name: 'Stunned', icon: 'question' },
+    { name: 'Unconscious', icon: 'bed' }
+]
+
 class ConditionsButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.conditions = props.conditions;
+    
+    activateCondition = (event, data) => {
+        let condition = data.content.toLowerCase();
+        if (this.props.conditions.includes(condition)) {
+            let newConditions = this.props.conditions.filter(item => item !== condition);                                 
+            this.props.setConditions(newConditions);
+        } else {
+            let curConditions = this.props.conditions;
+            curConditions.push(condition);
+            this.props.setConditions(curConditions);
+        }           
     }
+
     render() {
         return (
             <Popup
@@ -81,9 +109,17 @@ class ConditionsButton extends React.Component {
                     <Button basic floated={this.props.floated} content='Conditions' />
                 }
                 content={
-                    <List>
-                        <List.Item></List.Item>
-                    </List>
+                    <Button.Group vertical size='mini'>
+                        {conditions.map((condition) => (
+                                <Button
+                                    basic
+                                    key={condition.name + 'Button'}
+                                    active={this.props.conditions.includes(condition.name.toLowerCase())}
+                                    content={condition.name}
+                                    icon={condition.icon}
+                                    onClick={this.activateCondition} />
+                        ))}
+                    </Button.Group>
                 }
                 on='click'
                 position='top left'
