@@ -42,7 +42,7 @@ class App extends React.Component {
                     cards={this.cards}
                     addCardsToTracker={this.addCardsToTracker} />
                 {/* List of Battle Cards */}
-                <Card.Group id='battle-cards'>
+                <Card.Group id='battle-cards' itemsPerRow={4} stackable>
                     {this.state.cards
                         .sort((a, b) => b.initiative - a.initiative)
                         .map((card, i) => (
