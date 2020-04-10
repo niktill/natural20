@@ -11,7 +11,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            cards: [{id: shortid.generate(), cardType:'player',initiative:12,name:'Nik'}],
+            cards: [],
             showDeleteAllModal: false
         };
     }
