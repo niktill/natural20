@@ -56,7 +56,7 @@ class App extends React.Component {
                                 armourClass={card.armourClass} />
                         ))}
                 </Card.Group>
-                {/* Delete all battle bards button and modal */}
+                {/* Delete all battle cards button and modal */}
                 <Container textAlign='center'>
                     {this.state.cards.length > 0 ?
                         <Button id='delete-all-button' negative onClick={() => { this.setState({ showDeleteAllModal: true }) }}>Delete All</Button> : null}
