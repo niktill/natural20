@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Card, Button, Modal, Container } from 'semantic-ui-react'
 import BattleCard from './BattleCard';
 import AddCardForm from './AddCardForm'
-import shortid from "shortid";
 
 
 class App extends React.Component {

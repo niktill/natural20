@@ -26,7 +26,8 @@ class BattleCard extends React.Component {
             return (
                 <PlayerCardContent
                     initiative={this.initiative}
-                    conditions={this.state.conditions}>
+                    conditions={this.state.conditions}
+                    setConditions={this.setConditions}>
                 </PlayerCardContent>
             );
         } else if (this.cardType === 'monster') {
@@ -35,7 +36,8 @@ class BattleCard extends React.Component {
                     initiative={this.initiative}
                     armourClass={this.armourClass}
                     hitPoints={this.hitPoints}
-                    conditions={this.state.conditions}>
+                    conditions={this.state.conditions}
+                    setConditions={this.setConditions}>
                 </MonsterCardContent>
             );
         } else {
