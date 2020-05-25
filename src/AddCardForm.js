@@ -62,7 +62,7 @@ export class AddCardForm extends React.Component {
                     <Form.Group>
                         <Form.Select value={this.state.addCardOptions.cardType} name='cardType' required={true} label='Type' placeholder='Type'
                             onChange={this.changeAddCardOptions}
-                            options={[{ key: 'p', text: 'Player', value: 'player' }, { key: 'm', text: 'Monster', value: 'monster' }]}
+                            options={[{ key: 'p', text: 'Player', value: 'player' }, { key: 'm', text: 'NPC / Monster', value: 'monster' }]}
                         />
                         <Form.Input required={true} label='Name' placeholder='Name' name='name' />
                     </Form.Group>
