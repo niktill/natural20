@@ -15,6 +15,15 @@
     margin-right: 1rem; 
 }
 
+.monsterLoadErrorMessage {
+    align-self: flex-end;
+}
+
+#add-card-form .results.visible {
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
 .ui.header>.image+.content, .ui.header>img+.content {
     padding-right: .75rem
 }
