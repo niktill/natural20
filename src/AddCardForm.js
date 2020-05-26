@@ -10,12 +10,13 @@ export class AddCardForm extends React.Component {
 
         this.state = {
             addCardOptions: {
-                cardType: undefined,
-                name: undefined,
-                initiative: undefined,
-                rollinitiative: false,
+                cardType: '',
+                name: '',
+                initiative: '',
+                rollInitiative: false,
                 initiativeModifier: 0,
-                armourClass: undefined,
+                armourClass: '',
+                hitPoints: '',
                 quantity: 1
             },
             searchResults: [],
@@ -27,9 +28,9 @@ export class AddCardForm extends React.Component {
 
     changeAddCardOptions = (e, data) => {
         e.preventDefault();
-
+        
         let cardOption = data.name;
-        let newVal = (data.name === 'rollinitiative') ? data.checked : data.value;
+        let newVal = (cardOption === 'rollInitiative') ? data.checked : data.value;
         let addCardOptionsCopy = this.state.addCardOptions;
         addCardOptionsCopy[cardOption] = newVal;
         this.setState({ addCardOptions: addCardOptionsCopy });
@@ -44,7 +45,7 @@ export class AddCardForm extends React.Component {
             // calulate initiative         
             let initiativeModifierVal = event.target.initiativeModifier.value !== '' ?
                 parseInt(event.target.initiativeModifier.value) : 0;
-            let initiativeVal = this.state.addCardOptions.rollinitiative ?
+            let initiativeVal = this.state.addCardOptions.rollInitiative ?
                 Math.floor(Math.random() * 20) + 1 + initiativeModifierVal : event.target.initiative.value;
             // create new card
             let newCard = {
@@ -68,12 +69,43 @@ export class AddCardForm extends React.Component {
             this.setState({ searchIsLoading: true });
             let filteredResults = this.monsterList.filter((monster) =>
                 monster.name.toLowerCase().includes(searchTerm.toLowerCase()));
-            let formatFilterResults = filteredResults.map((monster) => {monster.title = monster.name; return monster});
+            let formatFilterResults = filteredResults.map((monster) => { monster.title = monster.name; return monster });
             this.setState({ searchResults: formatFilterResults });
             this.setState({ searchIsLoading: false });
         }
 
     }
+
+    handleMonsterSelect = (event, data) => {
+        if (data.result) {
+            this.setState({ searchIsLoading: true });
+            let proxyUrl = window.location.href.includes('localhost:') ? 'https://cors-anywhere.herokuapp.com/' : '';
+            fetch(proxyUrl + 'https://dnd5eapi.co' + data.result.url).then((res) => {
+                if (!res.ok) {
+                    throw new Error('Error in retrieving selected monster from API')
+                }
+                return res.json()
+            }).then((data) => {
+                let addCardOptionsCopy = this.state.addCardOptions;
+                addCardOptionsCopy.name = data.name;
+                addCardOptionsCopy.armourClass = data.armor_class;
+                addCardOptionsCopy.hitPoints = data.hit_points;
+                addCardOptionsCopy.initiativeModifier = this.abilityModifier(data.dexterity);
+                this.setState({ addCardOptions: addCardOptionsCopy })
+                this.setState({ searchIsLoading: false });
+            }).catch((err) => {
+                console.log(err)
+                this.setState({ searchIsLoading: false });
+                this.setState({ errorInLoadingMonsters: true });
+            })
+        }
+    }
+
+    abilityModifier = (base) => {
+        if (base < 3) throw Error("Ability scores must be at least 3")
+        if (base > 18) throw Error("Ability scores can be at most 18")
+        return Math.floor((base - 10) / 2);
+    };
 
     componentDidMount() {
         let proxyUrl = window.location.href.includes('localhost:') ? 'https://cors-anywhere.herokuapp.com/' : '';
@@ -100,7 +132,8 @@ export class AddCardForm extends React.Component {
                         onChange={this.changeAddCardOptions}
                         options={[{ key: 'p', text: 'Player', value: 'player' }, { key: 'm', text: 'NPC / Monster', value: 'monster' }]}
                     />
-                    <Form.Input required={true} label='Name' placeholder='Name' name='name' />
+                    <Form.Input required={true} label='Name' placeholder='Name' name='name'
+                        value={this.state.addCardOptions.name} onChange={this.changeAddCardOptions} />
                 </Form.Group>
                 <Form.Group>
                     <div className={'field' +
@@ -110,6 +143,7 @@ export class AddCardForm extends React.Component {
                         <Search
                             size='small'
                             onSearchChange={this.monsterSearch} onFocus={this.monsterSearch}
+                            onResultSelect={this.handleMonsterSelect}
                             loading={this.state.searchIsLoading || this.state.waitingForMonsterList}
                             results={this.state.searchResults}
                             resultRenderer={({ name }) => <Label content={name} />}
@@ -124,24 +158,32 @@ export class AddCardForm extends React.Component {
                 </Form.Group>
                 <Form.Group>
                     <Form.Input label='Initiative' placeholder='Initiative' type='number' name='initiative'
-                        disabled={this.state.addCardOptions.rollinitiative}
-                        required={!this.state.addCardOptions.rollinitiative} />
+                        disabled={this.state.addCardOptions.rollInitiative}
+                        required={!this.state.addCardOptions.rollInitiative}
+                        onChange={this.changeAddCardOptions}
+                        value={this.state.addCardOptions.initiative} />
                     <Popup
                         trigger={
-                            <Checkbox width={2} label='Roll Initiative' name='rollinitiative'
-                                checked={this.state.addCardOptions.rollinitiative}
+                            <Checkbox width={2} label='Roll Initiative' name='rollInitiative'
+                                checked={this.state.addCardOptions.rollInitiative}
                                 onChange={this.changeAddCardOptions} />}
                         content='Roll initiative instead of setting'
                         size='small'>
                     </Popup>
                     <Form.Input label='Initiative Modifier' placeholder='Initiative Modifier' type='number' name='initiativeModifier'
-                        disabled={!this.state.addCardOptions.rollinitiative} />
+                        disabled={!this.state.addCardOptions.rollInitiative}
+                        onChange={this.changeAddCardOptions}
+                        value={this.state.addCardOptions.initiativeModifier} />
                 </Form.Group>
                 <Form.Group>
                     <Form.Input disabled={this.state.addCardOptions.cardType !== 'monster'}
-                        label='Armour Class' placeholder='Armour Class' type='number' name='armourClass' />
+                        label='Armour Class' placeholder='Armour Class' type='number' name='armourClass'
+                        onChange={this.changeAddCardOptions}
+                        value={this.state.addCardOptions.armourClass} />
                     <Form.Input disabled={this.state.addCardOptions.cardType !== 'monster'}
-                        label='Hit Points' placeholder='Hit Points' type='number' name='hitPoints' />
+                        label='Hit Points' placeholder='Hit Points' type='number' name='hitPoints'
+                        onChange={this.changeAddCardOptions}
+                        value={this.state.addCardOptions.hitPoints} />
                 </Form.Group>
                 <Form.Group inline={true}>
                     <Popup
