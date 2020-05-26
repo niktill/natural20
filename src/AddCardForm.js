@@ -79,8 +79,7 @@ export class AddCardForm extends React.Component {
     handleMonsterSelect = (event, data) => {
         if (data.result) {
             this.setState({ searchIsLoading: true });
-            let proxyUrl = window.location.href.includes('localhost:') ? 'https://cors-anywhere.herokuapp.com/' : '';
-            fetch(proxyUrl + 'https://dnd5eapi.co' + data.result.url).then((res) => {
+            fetch('https://cors-anywhere.herokuapp.com/https://dnd5eapi.co' + data.result.url).then((res) => {
                 if (!res.ok) {
                     throw new Error('Error in retrieving selected monster from API')
                 }
@@ -108,8 +107,7 @@ export class AddCardForm extends React.Component {
     };
 
     componentDidMount() {
-        let proxyUrl = window.location.href.includes('localhost:') ? 'https://cors-anywhere.herokuapp.com/' : '';
-        fetch(proxyUrl + 'https://dnd5eapi.co/api/monsters').then((res) => {
+        fetch('https://cors-anywhere.herokuapp.com/https://dnd5eapi.co/api/monsters').then((res) => {
             if (!res.ok) {
                 throw new Error('Error in retrieving monsters from API')
             }
