@@ -70,8 +70,7 @@ export class AddCardForm extends React.Component {
             let filteredResults = this.monsterList.filter((monster) =>
                 monster.name.toLowerCase().includes(searchTerm.toLowerCase()));
             let formatFilterResults = filteredResults.map((monster) => { monster.title = monster.name; return monster });
-            this.setState({ searchResults: formatFilterResults });
-            this.setState({ searchIsLoading: false });
+            this.setState({ searchResults: formatFilterResults, searchIsLoading: false });
         }
 
     }
@@ -90,12 +89,10 @@ export class AddCardForm extends React.Component {
                 addCardOptionsCopy.armourClass = data.armor_class;
                 addCardOptionsCopy.hitPoints = data.hit_points;
                 addCardOptionsCopy.initiativeModifier = this.abilityModifier(data.dexterity);
-                this.setState({ addCardOptions: addCardOptionsCopy })
-                this.setState({ searchIsLoading: false });
+                this.setState({ addCardOptions: addCardOptionsCopy, searchIsLoading: false })
             }).catch((err) => {
                 console.log(err)
-                this.setState({ searchIsLoading: false });
-                this.setState({ errorInLoadingMonsters: true });
+                this.setState({ searchIsLoading: false, errorInLoadingMonsters: true });
             })
         }
     }
@@ -117,8 +114,7 @@ export class AddCardForm extends React.Component {
             this.setState({ waitingForMonsterList: false });
         }).catch((err) => {
             console.log(err)
-            this.setState({ searchIsLoading: false });
-            this.setState({ errorInLoadingMonsters: true });
+            this.setState({ waitingForMonsterList: false, searchIsLoading: false, errorInLoadingMonsters: true });
         })
     }
 
