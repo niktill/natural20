@@ -46,11 +46,7 @@ export class MonsterCardContent extends React.Component {
 
         let newHitPoints = this.state.currentHitPoints - dmg;
         if (newHitPoints > 0) {
-            if (newHitPoints > this.hitPoints) {
-                this.setState({ currentHitPoints: this.hitPoints });
-            } else {
-                this.setState({ currentHitPoints: newHitPoints })
-            }
+            this.setState({ currentHitPoints: newHitPoints })
         } else {
             this.setState({ currentHitPoints: 0 });
         }
@@ -75,9 +71,9 @@ export class MonsterCardContent extends React.Component {
                                     <Icon name='shield' />{this.armourClass}
                                 </Statistic.Value>
                             </Statistic>
-                        </div>) : null }
+                        </div>) : null}
                 </div>
-                {this.state.currentHitPoints ? (
+                {this.state.currentHitPoints !== '' ? (
                     <div>
                         <div className='ui hidden divider'></div>
                         <Progress
