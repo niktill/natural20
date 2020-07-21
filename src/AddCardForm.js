@@ -22,7 +22,8 @@ export class AddCardForm extends React.Component {
             searchResults: [],
             searchIsLoading: false,
             waitingForMonsterList: true,
-            errorInLoadingMonsters: false
+            errorInLoadingMonsters: false,
+            CardTypeSelected: false
         };
     }
 
@@ -38,29 +39,34 @@ export class AddCardForm extends React.Component {
     }
 
     addCards = (event) => {
-        let numCards = this.state.addCardOptions.cardType === 'monster' ? this.state.addCardOptions.quantity : 1;
-        let cardsToAdd = [];
+        if (this.state.addCardOptions.cardType) {
+            this.setState({ CardTypeSelected: false });
+            let numCards = this.state.addCardOptions.cardType === 'monster' ? this.state.addCardOptions.quantity : 1;
+            let cardsToAdd = [];
 
-        for (let i = 0; i < numCards; i++) {
-            // calulate initiative         
-            let initiativeModifierVal = event.target.initiativeModifier.value !== '' ?
-                parseInt(event.target.initiativeModifier.value) : 0;
-            let initiativeVal = this.state.addCardOptions.rollInitiative ?
-                Math.floor(Math.random() * 20) + 1 + initiativeModifierVal : event.target.initiative.value;
-            // create new card
-            let newCard = {
-                id: shortid.generate(),
-                cardType: this.state.addCardOptions.cardType,
-                name: (numCards === 1) ? event.target.name.value : event.target.name.value + " #" + (i + 1),
-                initiative: initiativeVal,
-                armourClass: event.target.armourClass.value,
-                hitPoints: event.target.hitPoints.value,
+            for (let i = 0; i < numCards; i++) {
+                // calulate initiative         
+                let initiativeModifierVal = event.target.initiativeModifier.value !== '' ?
+                    parseInt(event.target.initiativeModifier.value) : 0;
+                let initiativeVal = this.state.addCardOptions.rollInitiative ?
+                    Math.floor(Math.random() * 20) + 1 + initiativeModifierVal : event.target.initiative.value;
+                // create new card
+                let newCard = {
+                    id: shortid.generate(),
+                    cardType: this.state.addCardOptions.cardType,
+                    name: (numCards === 1) ? event.target.name.value : event.target.name.value + " #" + (i + 1),
+                    initiative: initiativeVal,
+                    armourClass: event.target.armourClass.value,
+                    hitPoints: event.target.hitPoints.value,
+                }
+                // add new card to cardsToAdd list
+                cardsToAdd.push(newCard);
             }
-            // add new card to cardsToAdd list
-            cardsToAdd.push(newCard);
+            // add new card(s) to battle tracker
+            this.props.addCardsToTracker(cardsToAdd);
+        } else {
+            this.setState({ CardTypeSelected: true });
         }
-        // add new card(s) to battle tracker
-        this.props.addCardsToTracker(cardsToAdd);
     }
 
     monsterSearch = (event, data) => {
@@ -121,6 +127,9 @@ export class AddCardForm extends React.Component {
     render() {
         return (
             <Form id='add-card-form' onSubmit={this.addCards}>
+                <Message className='CardTypeSelectedErrorMessage' size='mini' negative compact
+                        hidden={!this.state.CardTypeSelected}
+                        content='Please pick a Card Type.' />
                 <Form.Group>
                     <Form.Select value={this.state.addCardOptions.cardType} name='cardType' required={true} label='Type' placeholder='Type'
                         onChange={this.changeAddCardOptions}
