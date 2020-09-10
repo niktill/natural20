@@ -54,7 +54,7 @@ export class AddCardForm extends React.Component {
                 let newCard = {
                     id: shortid.generate(),
                     cardType: this.state.addCardOptions.cardType,
-                    name: (numCards === 1) ? event.target.name.value : event.target.name.value + " #" + (i + 1),
+                    name: (parseInt(numCards) === 1) ? event.target.name.value : event.target.name.value + " #" + (i + 1),
                     initiative: initiativeVal,
                     armourClass: event.target.armourClass.value,
                     hitPoints: event.target.hitPoints.value,
