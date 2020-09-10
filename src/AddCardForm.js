@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Popup, Checkbox, Search, Label, Message } from 'semantic-ui-react'
+import { Form, Popup, Checkbox, Search, Label, Message, Icon } from 'semantic-ui-react'
 import shortid from "shortid";
 
 export class AddCardForm extends React.Component {
@@ -29,7 +29,7 @@ export class AddCardForm extends React.Component {
 
     changeAddCardOptions = (e, data) => {
         e.preventDefault();
-        
+
         let cardOption = data.name;
         let newVal = (cardOption === 'rollInitiative') ? data.checked : data.value;
         let addCardOptionsCopy = this.state.addCardOptions;
@@ -128,8 +128,8 @@ export class AddCardForm extends React.Component {
         return (
             <Form id='add-card-form' onSubmit={this.addCards}>
                 <Message className='CardTypeSelectedErrorMessage' size='mini' negative compact
-                        hidden={!this.state.CardTypeSelected}
-                        content='Please pick a Card Type.' />
+                    hidden={!this.state.CardTypeSelected}
+                    content='Please pick a Card Type.' />
                 <Form.Group>
                     <Form.Select value={this.state.addCardOptions.cardType} name='cardType' required={true} label='Type' placeholder='Type'
                         onChange={this.changeAddCardOptions}
@@ -175,6 +175,7 @@ export class AddCardForm extends React.Component {
                     </Popup>
                     <Form.Input label='Initiative Modifier' placeholder='Initiative Modifier' type='number' name='initiativeModifier'
                         disabled={!this.state.addCardOptions.rollInitiative}
+                        required={this.state.addCardOptions.rollInitiative}
                         onChange={this.changeAddCardOptions}
                         value={this.state.addCardOptions.initiativeModifier} />
                 </Form.Group>
@@ -200,6 +201,13 @@ export class AddCardForm extends React.Component {
                         content='Quantity of monsters to add'
                         size='small' />
                     <Form.Button type='submit' id='add-card-button' positive={true}> Add to Battle</Form.Button>
+                    <Popup
+                        trigger={
+                            <a href='https://github.com/niktill/natural20' target='_blank' rel="noopener noreferrer">
+                                <Icon name='help circle' style={{ color: 'black' }} />
+                            </a>}
+                        content='Help'
+                        size='small' />
                 </Form.Group>
             </Form >
         );
