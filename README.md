@@ -1,10 +1,10 @@
-## Natural 20
+## Natural20
 
-Natural 20 is a Battle Tracker to be used for Dungeons & Dragons or other table-top RPGs. Natural 20 will help you track your RPG battle scenarios while maintaing factors such as initiative, turn order, health, armour class and more!
+Natural20 is a battle tracker to be used for Dungeons & Dragons or other table-top RPGs. Natural 20 will help you track your RPG battle scenarios while maintaing factors such as initiative, turn order, health, armour class and more!
 
-## How to start Natural 20
+## How to access Natural20
 
-Natural 20 URL (please allow time for it to load on start up):
+Natural20 can be accessed via this url:
 
 https://natural20battletracker.web.app/
 
