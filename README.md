@@ -32,7 +32,7 @@ After adding battle participants, use the associated battle cards below the form
 - **Hit Points**: Hit points are represented by a progress bar and located in the center of the battle card content.
 - **Damage Input**: This input field located underneath the Hit Points is used to damage or heal the battle participant. To damage the battle participant, input a positive value and click on the checkmark button. To heal the battale participant, input a negative value and click on the checkmark button.
 - **Conditions**: Conditions can be added to a battle participant by selecting the different conditions that pop up after clicking the conditions button on the bottom left of the battle card. To remove the conditions from the battle participant, click on on the conditions in the battle card content or deselect the conditions in the conditions pop up button.
-- **elete Card**: Click on the button labeled with an 'x' icon to delete the card and remove the battle participant from the battle.
+- **Delete Card**: Click on the button labeled with an "x" icon to delete the card and remove the battle participant from the battle.
 
 ### 3. Rinse and Repeat
 After finishing your battle you can click on the "Delete All" button located at the bottom of the page to remove all of the current battle participants and add a new set for the next battle!
