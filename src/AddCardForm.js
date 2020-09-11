@@ -201,13 +201,6 @@ export class AddCardForm extends React.Component {
                         content='Quantity of monsters to add'
                         size='small' />
                     <Form.Button type='submit' id='add-card-button' positive={true}> Add to Battle</Form.Button>
-                    <Popup
-                        trigger={
-                            <a href='https://github.com/niktill/natural20' target='_blank' rel="noopener noreferrer">
-                                <Icon name='help circle' style={{ color: 'black' }} />
-                            </a>}
-                        content='Help'
-                        size='small' />
                 </Form.Group>
             </Form >
         );
