@@ -1,3 +1,4 @@
+⚠️ Please note with Heroku not offering free tier hosting anymore the "monster search" functionality will not work! However the rest of the app should work fine!
 # Natural20
 
 Natural20 is a battle tracker to be used for Dungeons & Dragons or other table-top RPGs. Natural 20 will help you track your RPG battle scenarios while maintaing factors such as initiative, turn order, health, armour class and more!
